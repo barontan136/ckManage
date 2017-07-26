@@ -30,6 +30,12 @@ namespace ckManage.Models
             string sql = string.Format("select * from ck_buy order by buy_id desc limit 100;");
             return Tools.MySqlHelper.GetDataSet(Tools.MySqlHelper.Conn, CommandType.Text, sql, null);
         }
+
+        public int  getMaxId()
+        {
+            string sql = string.Format("select max(goods_id) from ck_buy;");
+            return (int)Tools.MySqlHelper.ExecuteScalar(Tools.MySqlHelper.Conn, CommandType.Text, sql, null);
+        }
         //
         public DataSet getRecordByGoodsId(int goods_id)
         {

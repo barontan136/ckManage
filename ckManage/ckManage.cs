@@ -11,6 +11,7 @@ using System.Windows.Forms;
 //using MySql.Data.MySqlClient;.Tables[0].DefaultView
 using ckManage.Tools;
 using ckManage.Models;
+using Newtonsoft.Json;
 
 namespace ckManage
 {
@@ -35,13 +36,20 @@ namespace ckManage
             */
 
             InitGoodsData();
+            InitSoldRecord();
             InitBuyRecord();
+            InitMatchData();
         }
 
         // 初始化入库记录
         private void InitBuyRecord()
         {
             updateBuyRecord(0);
+        }
+        // 初始化出库记录
+        private void InitSoldRecord()
+        {
+            updateSoldRecord(0);
         }
         
 
@@ -86,6 +94,22 @@ namespace ckManage
             }
         }
 
+
+
+        private void InitMatchData()
+        {
+            MatchModel matchModel = new MatchModel();
+            DataSet dsMatch = matchModel.getAll();
+
+            combox_match.DataSource = dsMatch.Tables[0].DefaultView;
+            combox_match.DisplayMember = "name";
+            combox_match.ValueMember = "match_id";
+            combox_sold_match.DataSource = dsMatch.Tables[0].DefaultView;
+            combox_sold_match.DisplayMember = "name";
+            combox_sold_match.ValueMember = "match_id";
+        }
+
+        #region 原材料管理
         // 添加产品
         private void toolsmenu_goodsadd_Click(object sender, EventArgs e)
         {
@@ -105,12 +129,17 @@ namespace ckManage
             goodsModel.Company = this.dgv_goods.CurrentRow.Cells[2].Value.ToString();
             goodsModel.Unit_name = this.dgv_goods.CurrentRow.Cells[3].Value.ToString();
             goodsModel.Min_weight = double.Parse(this.dgv_goods.CurrentRow.Cells[5].Value.ToString());
+            goodsModel.Hold_weight = double.Parse(this.dgv_goods.CurrentRow.Cells[4].Value.ToString());
             goodsModel.Status = 0;
             if (this.dgv_goods.CurrentRow.Cells[6].Value.ToString() == "废弃")
             {
                 goodsModel.Status = 1;
             }
-            
+            else if (this.dgv_goods.CurrentRow.Cells[6].Value.ToString() == "删除")
+            {
+                goodsModel.Status = 2;
+            }
+
             goods_add goodsAdd = new goods_add();
             goodsAdd.m_goodsModel = goodsModel;
             DialogResult result = goodsAdd.ShowDialog();
@@ -119,6 +148,7 @@ namespace ckManage
                 InitGoodsData();
             }
         }
+        #endregion
 
         private void showtabcontrol(int iPage)
         {
@@ -159,6 +189,7 @@ namespace ckManage
         private void menu_match_Click(object sender, EventArgs e)
         {
             showtabcontrol(3);
+            InitMatchData();
         }
         private void menu_goods_Click(object sender, EventArgs e)
         {
@@ -235,11 +266,152 @@ namespace ckManage
             }
         }
 
+        /// <summary>
+        /// 更新出库单数据
+        /// </summary>
+        /// <param name="iType">0 取所有数据  1取match_id数据</param>
+        /// <param name="goods_id">原材料品名ID</param>
+        private void updateSoldRecord(int iType, int match_id = 1)
+        {
+            SoldModel sold_records = new SoldModel();
+            DataSet ds_goods = new DataSet();
+            try
+            {
+                if (iType == 0)
+                {// 取所有
+                    ds_goods = sold_records.getAll();
+                }
+                else
+                {
+                    ds_goods = sold_records.getRecordByMatchId(match_id);
+                }
+                int iCnt = ds_goods.Tables[0].Rows.Count;
+                dgv_sold.RowCount = iCnt;
+                for (int i = 0; i < iCnt; i++)
+                {
+                    dgv_sold.Rows[i].Cells[0].Value = ds_goods.Tables[0].Rows[i]["sold_id"];
+                    dgv_sold.Rows[i].Cells[1].Value = ds_goods.Tables[0].Rows[i]["match_name"];
+                    dgv_sold.Rows[i].Cells[2].Value = ds_goods.Tables[0].Rows[i]["match_weight"];
+                    dgv_sold.Rows[i].Cells[3].Value = ds_goods.Tables[0].Rows[i]["create_datetime"];
+                    dgv_sold.Rows[i].Cells[4].Value = ds_goods.Tables[0].Rows[i]["operate_user"];
+                }
+            }
+            catch (Exception e)
+            {
+                Console.Write(e.Message);
+            }
+        }
+
         #region 配比管理
         private void btn_match_search_Click(object sender, EventArgs e)
+        {
+            MatchModel matchModel = new MatchModel();
+            int iRow = int.Parse(combox_match.SelectedValue.ToString());
+
+            try
+            {
+                DataSet dsMatch = matchModel.getAll();
+                string cur_match_config = dsMatch.Tables[0].Rows[iRow-1]["config"].ToString();
+
+                string[] sItems = cur_match_config.Split('&');
+                dgv_match.RowCount = sItems.Length;
+                int i = 0;
+                foreach(string sVal in sItems)
+                {
+                    string[] valItems = sVal.Split('#');
+                    dgv_match.Rows[i].Cells[0].Value = valItems[0];
+                    dgv_match.Rows[i].Cells[1].Value = valItems[1];
+                    dgv_match.Rows[i++].Cells[2].Value = valItems[2];
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+        private void btn_match_update_Click(object sender, EventArgs e)
+        {
+            MatchModel matchModel = new MatchModel();
+            int iRow = int.Parse(combox_match.SelectedValue.ToString());
+
+            try
+            {
+                DataSet dsMatch = matchModel.getAll();
+
+                int iCnt = dgv_match.RowCount;
+                string cur_match_config = "";
+                int i = 0;
+                for(i = 0; i < iCnt; i++)
+                {
+                    cur_match_config += dgv_match.Rows[i].Cells[0].Value + "#";
+                    cur_match_config += dgv_match.Rows[i].Cells[1].Value + "#";
+                    cur_match_config += dgv_match.Rows[i].Cells[2].Value + "&";
+                }
+                cur_match_config = cur_match_config.Substring(0, cur_match_config.Length - 1);
+                matchModel.Match_id = iRow;
+                matchModel.Config = cur_match_config;
+                
+                if (matchModel.update(matchModel) > 0)
+                {
+                    MessageBox.Show("修改成功！");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                MessageBox.Show("修改失败" + ex.Message);
+            }
+        }
+
+        private void btn_match_add_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int iCnt = dgv_match.RowCount;
+                string cur_match_config = "";
+                int i = 0;
+                for (i = 0; i < iCnt; i++)
+                {
+                    cur_match_config += dgv_match.Rows[i].Cells[0].Value + "#";
+                    cur_match_config += dgv_match.Rows[i].Cells[1].Value + "#";
+                    cur_match_config += dgv_match.Rows[i].Cells[2].Value + "&";
+                }
+                cur_match_config = cur_match_config.Substring(0, cur_match_config.Length - 1);
+
+                match_add matchAdd = new match_add();
+                matchAdd.m_match_config = cur_match_config;
+                DialogResult result = matchAdd.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    MessageBox.Show("添加成功！");
+                    InitMatchData();
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            
+        }
+        #endregion
+
+        #region 出库窗体操作
+        private void btn_sold_search_Click(object sender, EventArgs e)
+        {
+            if (combox_sold_match.Items.Count <= 0) return;
+            int match_id = int.Parse(combox_sold_match.SelectedValue.ToString());
+            updateSoldRecord(1, match_id);
+        }
+        private void btn_sold_all_Click(object sender, EventArgs e)
+        {
+            updateSoldRecord(0);
+        }
+        private void btn_sold_Click(object sender, EventArgs e)
         {
 
         }
         #endregion
+
     }
+    
 }

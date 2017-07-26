@@ -47,6 +47,12 @@ namespace ckManage.Models
             return Tools.MySqlHelper.GetDataSet(Tools.MySqlHelper.Conn, CommandType.Text, sql, null);
         }
 
+        public int getMaxRecordID()
+        {
+            string sql = string.Format("select max(goods_id) from ck_goods;");
+            return (int)Tools.MySqlHelper.ExecuteScalar(Tools.MySqlHelper.Conn, CommandType.Text, sql, null);
+        }
+
         // 插入数据
         public int Insert(GoodsModel goods)
         {

@@ -38,6 +38,13 @@ namespace ckManage
 
         private void btn_comfirm_Click(object sender, EventArgs e)
         {
+            if (combox_goods.Text == ""
+                || txt_weight.Text == ""
+                )
+            {
+                return;
+            }
+
             try
             {
                 BuyModel buy_model = new BuyModel();
@@ -57,6 +64,16 @@ namespace ckManage
                 goods_model.Goods_id = buy_model.Goods_id;
                 goods_model.Hold_weight += buy_model.Goods_weight;
                 goods_model.updateHoldWeight(goods_model);
+
+                // 插入log记录
+                TradeLogModel trade_model = new TradeLogModel();
+                trade_model.Goods_id = buy_model.Goods_id;
+                trade_model.Goods_name = buy_model.Goods_name;
+                trade_model.Trade_id = buy_model.getMaxId();
+                trade_model.Trade_type = 0; // 0入库 1出库
+                trade_model.Trade_weight = buy_model.Goods_weight;
+                trade_model.After_weight = goods_model.Hold_weight;
+                trade_model.Insert(trade_model);
 
                 this.DialogResult = DialogResult.OK;
             }

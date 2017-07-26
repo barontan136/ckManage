@@ -9,3 +9,15 @@ F:\projects\ck_manage\ckManage\ckManage\obj\Debug\ckManage.exe
 F:\projects\ck_manage\ckManage\ckManage\obj\Debug\ckManage.pdb
 F:\projects\ck_manage\ckManage\ckManage\obj\Debug\ckManage.goods_add.resources
 F:\projects\ck_manage\ckManage\ckManage\obj\Debug\ckManage.RecordInForm.resources
+E:\tb\prj\ckManage\ckManage\bin\Debug\ckManage.exe.config
+E:\tb\prj\ckManage\ckManage\bin\Debug\ckManage.exe
+E:\tb\prj\ckManage\ckManage\bin\Debug\ckManage.pdb
+E:\tb\prj\ckManage\ckManage\obj\Debug\ckManage.csprojResolveAssemblyReference.cache
+E:\tb\prj\ckManage\ckManage\obj\Debug\ckManage.ck_main.resources
+E:\tb\prj\ckManage\ckManage\obj\Debug\ckManage.goods_add.resources
+E:\tb\prj\ckManage\ckManage\obj\Debug\ckManage.Properties.Resources.resources
+E:\tb\prj\ckManage\ckManage\obj\Debug\ckManage.RecordInForm.resources
+E:\tb\prj\ckManage\ckManage\obj\Debug\ckManage.csproj.GenerateResource.Cache
+E:\tb\prj\ckManage\ckManage\obj\Debug\ckManage.exe
+E:\tb\prj\ckManage\ckManage\obj\Debug\ckManage.pdb
+E:\tb\prj\ckManage\ckManage\obj\Debug\ckManage.match_add.resources
