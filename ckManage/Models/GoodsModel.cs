@@ -21,6 +21,7 @@ namespace ckManage.Models
         private int status = 0;
         private string create_datetime = "";
         private string update_datetime = "";
+        private string dummy = "";
 
         public int Goods_id { get => goods_id; set => goods_id = value; }
         public string Name { get => name; set => name = value; }
@@ -32,6 +33,7 @@ namespace ckManage.Models
         public int Status { get => status; set => status = value; }
         public string Create_datetime { get => create_datetime; set => create_datetime = value; }
         public string Update_datetime { get => update_datetime; set => update_datetime = value; }
+        public string Dummy { get => dummy; set => dummy = value; }
 
         //
         public DataSet getAll()

@@ -11,7 +11,6 @@ using System.Windows.Forms;
 //using MySql.Data.MySqlClient;.Tables[0].DefaultView
 using ckManage.Tools;
 using ckManage.Models;
-using Newtonsoft.Json;
 
 namespace ckManage
 {
@@ -408,7 +407,13 @@ namespace ckManage
         }
         private void btn_sold_Click(object sender, EventArgs e)
         {
-
+            RecordOutForm recordeOut = new RecordOutForm();
+            recordeOut.Owner = this;
+            DialogResult result = recordeOut.ShowDialog();
+            if (result == DialogResult.OK)
+            {// 查询出全部
+                updateSoldRecord(0);
+            }
         }
         #endregion
 

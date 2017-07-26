@@ -39,7 +39,7 @@ namespace ckManage.Models
         //
         public DataSet getRecordByGoodsId(int goods_id)
         {
-            string sql = string.Format("select * from ck_buy where goods_id = {0}", goods_id);
+            string sql = string.Format("select * from ck_buy where goods_id = {0}  order by buy_id desc;", goods_id);
             return Tools.MySqlHelper.GetDataSet(Tools.MySqlHelper.Conn, CommandType.Text, sql, null);
         }
 

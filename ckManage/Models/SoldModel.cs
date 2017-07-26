@@ -37,19 +37,19 @@ namespace ckManage.Models
 
         public int  getMaxId()
         {
-            string sql = string.Format("select max(goods_id) from ck_sold;");
+            string sql = string.Format("select max(sold_id) from ck_sold;");
             return (int)Tools.MySqlHelper.ExecuteScalar(Tools.MySqlHelper.Conn, CommandType.Text, sql, null);
         }
         //
         public DataSet getRecord(int sold_id)
         {
-            string sql = string.Format("select * from ck_sold where sold_id = {0}", sold_id);
+            string sql = string.Format("select * from ck_sold where sold_id = {0} ", sold_id);
             return Tools.MySqlHelper.GetDataSet(Tools.MySqlHelper.Conn, CommandType.Text, sql, null);
         }
         //
         public DataSet getRecordByMatchId(int match_id)
         {
-            string sql = string.Format("select * from ck_sold where match_id = {0}", match_id);
+            string sql = string.Format("select * from ck_sold where match_id = {0}  order by sold_id desc;", match_id);
             return Tools.MySqlHelper.GetDataSet(Tools.MySqlHelper.Conn, CommandType.Text, sql, null);
         }
 

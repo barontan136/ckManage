@@ -78,7 +78,7 @@
             this.txt_weight.Name = "txt_weight";
             this.txt_weight.Size = new System.Drawing.Size(174, 21);
             this.txt_weight.TabIndex = 15;
-            this.txt_weight.Text = "1000";
+            this.txt_weight.Text = "1";
             // 
             // label1
             // 

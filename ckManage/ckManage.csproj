@@ -36,10 +36,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\MySql.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -85,6 +81,12 @@
     <Compile Include="RecordInForm.Designer.cs">
       <DependentUpon>RecordInForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="RecordOutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RecordOutForm.Designer.cs">
+      <DependentUpon>RecordOutForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Tools\MySqlHelper.cs" />
     <EmbeddedResource Include="ckManage.resx">
       <DependentUpon>ckManage.cs</DependentUpon>
@@ -106,6 +108,9 @@
     </Compile>
     <EmbeddedResource Include="RecordInForm.resx">
       <DependentUpon>RecordInForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RecordOutForm.resx">
+      <DependentUpon>RecordOutForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

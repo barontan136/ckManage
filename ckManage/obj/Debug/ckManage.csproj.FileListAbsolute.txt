@@ -21,3 +21,16 @@ E:\tb\prj\ckManage\ckManage\obj\Debug\ckManage.csproj.GenerateResource.Cache
 E:\tb\prj\ckManage\ckManage\obj\Debug\ckManage.exe
 E:\tb\prj\ckManage\ckManage\obj\Debug\ckManage.pdb
 E:\tb\prj\ckManage\ckManage\obj\Debug\ckManage.match_add.resources
+F:\projects\ckManage\ckManage\bin\Debug\ckManage.exe.config
+F:\projects\ckManage\ckManage\bin\Debug\ckManage.exe
+F:\projects\ckManage\ckManage\bin\Debug\ckManage.pdb
+F:\projects\ckManage\ckManage\obj\Debug\ckManage.ck_main.resources
+F:\projects\ckManage\ckManage\obj\Debug\ckManage.goods_add.resources
+F:\projects\ckManage\ckManage\obj\Debug\ckManage.match_add.resources
+F:\projects\ckManage\ckManage\obj\Debug\ckManage.Properties.Resources.resources
+F:\projects\ckManage\ckManage\obj\Debug\ckManage.RecordInForm.resources
+F:\projects\ckManage\ckManage\obj\Debug\ckManage.RecordOutForm.resources
+F:\projects\ckManage\ckManage\obj\Debug\ckManage.csproj.GenerateResource.Cache
+F:\projects\ckManage\ckManage\obj\Debug\ckManage.exe
+F:\projects\ckManage\ckManage\obj\Debug\ckManage.pdb
+F:\projects\ckManage\ckManage\obj\Debug\ckManage.csprojResolveAssemblyReference.cache
