@@ -1,0 +1,91 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using ckManage.Models;
+
+namespace ckManage
+{
+    public partial class RecordOutForm : Form
+    {
+        public RecordOutForm()
+        {
+            InitializeComponent();
+        }
+
+        private void InitData()
+        {
+            try
+            {
+                MatchModel matchModel = new MatchModel();
+                DataSet dsMatch = matchModel.getAll();
+
+                combox_match.DataSource = dsMatch.Tables[0].DefaultView;
+                combox_match.DisplayMember = "name";
+                combox_match.ValueMember = "match_id";
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        private void btn_comfirm_Click(object sender, EventArgs e)
+        {
+            if (combox_match.Text == ""
+                || txt_weight.Text == "")
+            {
+                return;
+            }
+
+            try
+            {
+                MatchModel match_model = new MatchModel();
+                DataSet dsMatch = match_model.getOne(int.Parse(combox_match.SelectedValue.ToString()));
+                string sold_config = dsMatch.Tables[0].Rows[0]["config"].ToString();
+                if (sold_config == "") return;
+
+                SoldModel model = new SoldModel();
+                model.Match_id = int.Parse(combox_match.SelectedValue.ToString());
+                model.Match_name = combox_match.Text;
+                model.Match_weight = int.Parse(txt_weight.Text);
+                model.Sold_config = dsMatch.Tables[0].Rows[0]["config"].ToString();
+                model.Status = 0;
+                model.Create_datetime = dt_sold.Text;
+                model.Update_datetime = DateTime.Now.ToString();
+                model.Operate_user = "系统管理员";
+                model.Insert(model);
+
+                // 更新总库存
+                GoodsModel goods_model = new GoodsModel();
+                DataSet ds_goods = goods_model.getRecord(buy_model.Goods_id);
+                goods_model.Hold_weight = double.Parse(ds_goods.Tables[0].Rows[0]["hold_weight"].ToString());
+                goods_model.Goods_id = buy_model.Goods_id;
+                goods_model.Hold_weight += buy_model.Goods_weight;
+                goods_model.updateHoldWeight(goods_model);
+
+                // 插入log记录
+                TradeLogModel trade_model = new TradeLogModel();
+                trade_model.Goods_id = buy_model.Goods_id;
+                trade_model.Goods_name = buy_model.Goods_name;
+                trade_model.Trade_id = buy_model.getMaxId();
+                trade_model.Trade_type = 0; // 0入库 1出库
+                trade_model.Trade_weight = buy_model.Goods_weight;
+                trade_model.After_weight = goods_model.Hold_weight;
+                trade_model.Insert(trade_model);
+
+                this.DialogResult = DialogResult.OK;
+            }
+            catch (Exception err)
+            {
+                Console.Write(err.Message);
+                return;
+            }
+        }
+    }
+}
