@@ -1,0 +1,11 @@
+F:\projects\ck_manage\ckManage\ckManage\bin\Debug\ckManage.exe.config
+F:\projects\ck_manage\ckManage\ckManage\bin\Debug\ckManage.exe
+F:\projects\ck_manage\ckManage\ckManage\bin\Debug\ckManage.pdb
+F:\projects\ck_manage\ckManage\ckManage\obj\Debug\ckManage.csprojResolveAssemblyReference.cache
+F:\projects\ck_manage\ckManage\ckManage\obj\Debug\ckManage.ck_main.resources
+F:\projects\ck_manage\ckManage\ckManage\obj\Debug\ckManage.Properties.Resources.resources
+F:\projects\ck_manage\ckManage\ckManage\obj\Debug\ckManage.csproj.GenerateResource.Cache
+F:\projects\ck_manage\ckManage\ckManage\obj\Debug\ckManage.exe
+F:\projects\ck_manage\ckManage\ckManage\obj\Debug\ckManage.pdb
+F:\projects\ck_manage\ckManage\ckManage\obj\Debug\ckManage.goods_add.resources
+F:\projects\ck_manage\ckManage\ckManage\obj\Debug\ckManage.RecordInForm.resources
